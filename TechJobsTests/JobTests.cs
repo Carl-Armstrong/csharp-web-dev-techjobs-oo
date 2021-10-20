@@ -41,5 +41,46 @@ namespace TechJobsTests
         {
             Assert.IsFalse(testJob3.Equals(testJob4));
         }
+
+        [TestMethod]
+        public void TestToStringStartsAndEndsWithNewLine()
+        {
+            string testString = testJob3.ToString();
+            char firstChar = testString[0];
+            char lastChar = testString[testString.Length - 1];
+            Assert.IsTrue(firstChar == lastChar);
+        }
+
+        [TestMethod]
+        public void TestToStringContainsCorrectLabelsAndData()
+        {
+            string testOutput = $@" 
+ID: {testJob3.Id}
+Name: {testJob3.Name}
+Employer: {testJob3.EmployerName.Value}
+Location: {testJob3.EmployerLocation.Value}
+Position Type: {testJob3.JobType.Value}
+Core Competency: {testJob3.JobCoreCompetency.Value}
+ ";
+            Assert.AreEqual(testOutput, testJob3.ToString());
+        }
+
+        [TestMethod]
+        public void TestToStringHandlesEmptyField()
+        {
+            testJob3.EmployerName.Value = "";
+            testJob3.JobType.Value = "";
+            string testOutput = $@" 
+ID: {testJob3.Id}
+Name: {testJob3.Name}
+Employer: Data not available
+Location: {testJob3.EmployerLocation.Value}
+Position Type: Data not available
+Core Competency: {testJob3.JobCoreCompetency.Value}
+ ";
+            Assert.AreEqual(testOutput, testJob3.ToString());
+        }
+
+
     }
 }
